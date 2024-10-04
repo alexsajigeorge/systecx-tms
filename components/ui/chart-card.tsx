@@ -1,193 +1,109 @@
-"use client"
+"use client";
 
 import * as React from "react";
-import { TrendingUp } from "lucide-react";
+import { Dot, DotIcon, MoveUp, TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
-    ChartConfig,
-    ChartContainer,
-    ChartTooltip,
-    ChartTooltipContent,
-} from "@/components/ui/chart"
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 
-export const description = "A donut chart with text"
+export const description = "A donut chart with text";
 
 const chartData = [
-    { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-    { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-    { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
-    { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-    { browser: "other", visitors: 190, fill: "var(--color-other)" },
-]
+  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
+  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
+  { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
+  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
+  { browser: "other", visitors: 190, fill: "var(--color-other)" },
+];
 
 const chartConfig = {
-    visitors: {
-        label: "Visitors",
-    },
-    chrome: {
-        label: "Chrome",
-        color: "hsl(var(--chart-1))",
-    },
-    safari: {
-        label: "Safari",
-        color: "hsl(var(--chart-2))",
-    },
-    firefox: {
-        label: "Firefox",
-        color: "hsl(var(--chart-3))",
-    },
-    edge: {
-        label: "Edge",
-        color: "hsl(var(--chart-4))",
-    },
-    other: {
-        label: "Other",
-        color: "hsl(var(--chart-5))",
-    },
-} satisfies ChartConfig
+  visitors: {
+    label: "Visitors",
+  },
+  chrome: {
+    label: "Chrome",
+    color: "hsl(var(--chart-1))",
+  },
+  safari: {
+    label: "Safari",
+    color: "hsl(var(--chart-2))",
+  },
+  firefox: {
+    label: "Firefox",
+    color: "hsl(var(--chart-3))",
+  },
+  edge: {
+    label: "Edge",
+    color: "hsl(var(--chart-4))",
+  },
+  other: {
+    label: "Other",
+    color: "hsl(var(--chart-5))",
+  },
+} satisfies ChartConfig;
 
 export function ChartComponent() {
-    const totalVisitors = React.useMemo(() => {
-        return chartData.reduce((acc, curr) => acc + curr.visitors, 0)
-    }, [])
+  const totalVisitors = React.useMemo(() => {
+    return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
+  }, []);
 
-    return (
-        <Card className="flex flex-col bg-gradient-to-b from-blue-400 to-green-500">
-            <CardHeader className="items-center pb-0">
-                <CardTitle>DIVISION</CardTitle>
-                <CardDescription>
-                    <Tabs defaultValue="account" className="mt-5">
-                        <TabsList className="flex justify-center">
-                            <TabsTrigger value="account">Metals</TabsTrigger>
-                            <TabsTrigger value="password">Minerals</TabsTrigger>
-                        </TabsList>
-                        <TabsContent value="account">
-                            <CardContent className="flex-1 pb-0">
-                                <ChartContainer
-                                    config={chartConfig}
-                                    className="mx-auto aspect-square max-h-[250px]"
-                                >
-                                    <PieChart>
-                                        <ChartTooltip
-                                            cursor={false}
-                                            content={<ChartTooltipContent hideLabel />}
-                                        />
-                                        <Pie
-                                            data={chartData}
-                                            dataKey="visitors"
-                                            nameKey="browser"
-                                            innerRadius={60}
-                                            strokeWidth={5}
-                                        >
-                                            <Label
-                                                content={({ viewBox }) => {
-                                                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                                                        return (
-                                                            <text
-                                                                x={viewBox.cx}
-                                                                y={viewBox.cy}
-                                                                textAnchor="middle"
-                                                                dominantBaseline="middle"
-                                                            >
-                                                                <tspan
-                                                                    x={viewBox.cx}
-                                                                    y={viewBox.cy}
-                                                                    className="fill-foreground text-3xl font-bold"
-                                                                >
-                                                                    {totalVisitors.toLocaleString()}
-                                                                </tspan>
-                                                                <tspan
-                                                                    x={viewBox.cx}
-                                                                    y={(viewBox.cy || 0) + 24}
-                                                                    className="fill-muted-foreground"
-                                                                >
-                                                                    Visitors
-                                                                </tspan>
-                                                            </text>
-                                                        )
-                                                    }
-                                                }}
-                                            />
-                                        </Pie>
-                                    </PieChart>
-                                </ChartContainer>
-                            </CardContent>
-                        </TabsContent>
-                        <TabsContent value="password">
-                        <CardContent className="flex-1 pb-0">
-                                <ChartContainer
-                                    config={chartConfig}
-                                    className="mx-auto aspect-square max-h-[250px]"
-                                >
-                                    <PieChart>
-                                        <ChartTooltip
-                                            cursor={false}
-                                            content={<ChartTooltipContent hideLabel />}
-                                        />
-                                        <Pie
-                                            data={chartData}
-                                            dataKey="visitors"
-                                            nameKey="browser"
-                                            innerRadius={60}
-                                            strokeWidth={5}
-                                        >
-                                            <Label
-                                                content={({ viewBox }) => {
-                                                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                                                        return (
-                                                            <text
-                                                                x={viewBox.cx}
-                                                                y={viewBox.cy}
-                                                                textAnchor="middle"
-                                                                dominantBaseline="middle"
-                                                            >
-                                                                <tspan
-                                                                    x={viewBox.cx}
-                                                                    y={viewBox.cy}
-                                                                    className="fill-foreground text-3xl font-bold"
-                                                                >
-                                                                    {totalVisitors.toLocaleString()}
-                                                                </tspan>
-                                                                <tspan
-                                                                    x={viewBox.cx}
-                                                                    y={(viewBox.cy || 0) + 24}
-                                                                    className="fill-muted-foreground"
-                                                                >
-                                                                    Visitors
-                                                                </tspan>
-                                                            </text>
-                                                        )
-                                                    }
-                                                }}
-                                            />
-                                        </Pie>
-                                    </PieChart>
-                                </ChartContainer>
-                            </CardContent>
-                        </TabsContent>
-                    </Tabs>
-                </CardDescription>
-            </CardHeader>
+  return (
+    <Card className="flex flex-col bg-gradient-to-t from-[#572ad8] via-[#3260dc] to-[#01a8e1]">
+      <CardHeader className="items-center pb-0">
+        <CardTitle className="text-white">DIVISION</CardTitle>
+        <CardDescription>
+          <Tabs defaultValue="metals" className="mt-5">
+            <TabsList className="flex justify-center">
+              <TabsTrigger value="metals">Metals</TabsTrigger>
+              <TabsTrigger value="minerals">Minerals</TabsTrigger>
+            </TabsList>
+            <TabsContent value="account"></TabsContent>
+            <TabsContent value="minerals"></TabsContent>
+          </Tabs>
+        </CardDescription>
+      </CardHeader>
 
-            <CardFooter className="flex-col gap-2 text-sm">
-                <div className="flex items-center gap-2 font-medium leading-none">
-                    Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-                </div>
-                <div className="leading-none text-muted-foreground">
-                    Showing total visitors for the last 6 months
-                </div>
-            </CardFooter>
-        </Card>
-    )
+      <CardFooter className="flex-col gap-2 text-sm">
+        <Tabs defaultValue="amount" className="w-full">
+          <TabsList>
+            <TabsTrigger value="amount">Amount</TabsTrigger>
+            <TabsTrigger value="volume">Volume</TabsTrigger>
+          </TabsList>
+          <TabsContent value="amount">
+            <ul>
+              <li className="flex items-start">
+                <Dot size={50} color="#fff" />
+                <span className="text-white">
+                  <p className="text-md">Coal</p>
+                  <p className="text-lg">
+                    $ 12,000
+                    <span className="text-white bg-[#3aa345] ml-2 rounded-sm px-1 text-xs inline-flex items-center gap-1">
+                      10.3% <MoveUp size={10} color="#fff" />
+                    </span>
+                  </p>
+                </span>
+              </li>
+              <Dot size={50} color="#fff" />
+              <Dot size={50} color="#fff" />
+            </ul>
+          </TabsContent>
+          <TabsContent value="volume">Change your password here.</TabsContent>
+        </Tabs>
+      </CardFooter>
+    </Card>
+  );
 }
