@@ -13,7 +13,7 @@ const Header = () => {
             <li><span className="flex items-center gap-2 cursor-pointer hover:text-primary"><SquareCheckBig size={20} />Tasks</span></li>
             <li><span className="flex items-center gap-2 cursor-pointer hover:text-primary"><CircleCheck size={20} />Approvals</span></li>
           </ul>
-          <ul className="flex items-center gap-10 2xsm:gap-4">
+          <ul className="flex items-center gap-10 mr-10 2xsm:gap-4">
 
             <Expand size={20} className="hover:text-primary cursor-pointer" />
 
