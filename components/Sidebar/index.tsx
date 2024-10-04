@@ -3,6 +3,8 @@
 import { Fragment, useEffect, useState } from "react";
 
 import Link from "next/link";
+import logo from "../../images/logo.png"
+import Image from "next/image";
 
 import {
   Tooltip,
@@ -42,17 +44,20 @@ export default function SideNav() {
   };
 
   return (
-    <div className="pr-4">
+    <div className="z-50">
       <div
         className={cn(
-          isSidebarExpanded ? "w-[200px]" : "w-[68px]",
-          "border-r transition-all duration-300 ease-in-out transform hidden sm:flex h-full bg-accent"
+          isSidebarExpanded ? "w-[220px]" : "w-[90px]",
+          "border-r transition-all duration-300 ease-in-out transform hidden sm:flex h-full bg-white"
         )}
       >
-        <aside className="flex h-full flex-col w-full break-words px-4 overflow-x-hidden columns-1">
+        <aside className="flex h-full flex-col p-3 text-center w-full break-words overflow-x-hidden columns-1">
           {/* Top */}
-          <div className="mt-4 relative pb-2">
-            <div className="flex flex-col space-y-1">
+          <div className="mt-3 relative pb-2">
+            <div className="flex justify-center items-center pb-16">
+              <Image src={logo} alt={"logo"} className="w-10 h-10" />
+            </div>
+            <div className="flex flex-col space-y-6">
               {navItems.map((item, idx) => {
                 if (item.position === "top") {
                   return (
@@ -93,16 +98,16 @@ export default function SideNav() {
             })}
           </div>
         </aside>
-        <div className="mt-[calc(calc(90vh)-40px)] relative">
+        <div className="mb-[calc(calc(90vh)-40px)] relative">
           <button
             type="button"
-            className="absolute bottom-32 right-[-12px] flex h-6 w-6 items-center justify-center border border-muted-foreground/20 rounded-full bg-accent shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out"
+            className="absolute top-5 right-[-20px] flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out"
             onClick={toggleSidebar}
           >
             {isSidebarExpanded ? (
-              <ChevronLeft size={16} className="stroke-foreground" />
+              <ChevronLeft size={24} className="stroke-primary" />
             ) : (
-              <ChevronRight size={16} className="stroke-foreground" />
+              <ChevronRight size={24} className="stroke-primary" />
             )}
           </button>
         </div>
@@ -123,9 +128,9 @@ export const SideNavItem: React.FC<{
       {isSidebarExpanded ? (
         <Link
           href={path}
-          className={`h-full relative flex items-center whitespace-nowrap rounded-md ${
+          className={`h-full p-2 relative flex items-center whitespace-nowrap rounded-md ${
             active
-              ? "font-base text-sm bg-neutral-200 shadow-sm text-neutral-700 dark:bg-neutral-800 dark:text-white"
+              ? "font-base text-sm bg-background shadow-sm text-primary"
               : "hover:bg-neutral-200 hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
           }`}
         >
@@ -142,11 +147,11 @@ export const SideNavItem: React.FC<{
                 href={path}
                 className={`h-full relative flex items-center whitespace-nowrap rounded-md ${
                   active
-                    ? "font-base text-sm bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-white"
+                    ? "font-base text-sm bg-background text-primary dark:text-white"
                     : "hover:bg-neutral-200 hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
                 }`}
               >
-                <div className="relative font-base text-sm p-2 flex flex-row items-center space-x-2 rounded-md duration-100">
+                <div className="relative font-base text-sm p-4 flex flex-row items-center space-x-2 rounded-md duration-100">
                   {icon}
                 </div>
               </Link>

@@ -1,5 +1,5 @@
 import { usePathname } from "next/navigation";
-import { Bell, Briefcase, Home, Settings, User } from "lucide-react";
+import {  FileCheck2,  LayoutDashboard, ShoppingBag, ShoppingCart,  TrendingUpDown, UserRound, UsersRound } from "lucide-react";
 
 export const NavItems = () => {
   const pathname = usePathname();
@@ -10,39 +10,53 @@ export const NavItems = () => {
 
   return [
     {
-      name: "Home",
+      name: "Dashboard",
       href: "/",
-      icon: <Home size={20} />,
+      icon: <LayoutDashboard size={20} />,
       active: pathname === "/",
       position: "top",
     },
     {
-      name: "Profile",
-      href: "/profile",
-      icon: <User size={20} />,
-      active: isNavItemActive(pathname, "/profile"),
+      name: "Customers",
+      href: "/customers",
+      icon: <UserRound size={20} />,
+      active: isNavItemActive(pathname, "/customers"),
       position: "top",
     },
     {
-      name: "Notifications",
-      href: "/notifications",
-      icon: <Bell size={20} />,
-      active: isNavItemActive(pathname, "/notifications"),
+      name: "Suppliers",
+      href: "/suppliers",
+      icon: <UsersRound size={20} />,
+      active: isNavItemActive(pathname, "/suppliers"),
       position: "top",
     },
     {
-      name: "Projects",
-      href: "/projects",
-      icon: <Briefcase size={20} />,
-      active: isNavItemActive(pathname, "/projects"),
+      name: "Products",
+      href: "/products",
+      icon: <ShoppingCart size={20} />,
+      active: isNavItemActive(pathname, "/products"),
       position: "top",
     },
     {
-      name: "Settings",
-      href: "/settings",
-      icon: <Settings size={20} />,
-      active: isNavItemActive(pathname, "/settings"),
-      position: "bottom",
+      name: "Trading",
+      href: "/trading",
+      icon: <TrendingUpDown size={20} />,
+      active: isNavItemActive(pathname, "/trading"),
+      position: "top",
+    },
+    {
+      name: "Sales",
+      href: "/sales",
+      icon: <ShoppingBag size={20} />,
+      active: isNavItemActive(pathname, "/sales"),
+      position: "top",
+    },
+    {
+      name: "Reports",
+      href: "/reports",
+      icon: <FileCheck2 size={20} />,
+      active: isNavItemActive(pathname, "/reports"),
+      position: "top",
     },
   ];
 };
