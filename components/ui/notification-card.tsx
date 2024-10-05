@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 const NotificationCard = () => {
     return (
-        <div className='shadow-md bg-white rounded-3xl'>
+        <div className='shadow-md bg-white rounded-3xl mt-6'>
             <div className='flex justify-between items-center bg-[#f9f9ff] p-6 rounded-t-3xl'>
                 <h1 className="block text-xl font-semibold text-gray-500">Notifications</h1>
                 <Link href={'#'} className='text-blue-700 underline'> View All</Link>

@@ -62,7 +62,7 @@ export function ChartComponent() {
   }, []);
 
   return (
-    <Card className="flex flex-col bg-gradient-to-t from-[#572ad8] via-[#3260dc] to-[#01a8e1]">
+    <Card className="flex h-full flex-col bg-gradient-to-t from-[#572ad8] via-[#3260dc] to-[#01a8e1]">
       <CardHeader className="items-center pb-0">
         <CardTitle className="text-white">DIVISION</CardTitle>
         <CardDescription>
