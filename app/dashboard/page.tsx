@@ -28,7 +28,6 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     setLoading(true);
-  
     try {
       const [customersResponse, suppliersResponse, meetingsResponse] = await Promise.all([
         axios.get('/api/customers'),

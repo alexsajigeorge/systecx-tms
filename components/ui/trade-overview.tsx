@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SmallCard from "./smallcard";
 import { MoveUp } from "lucide-react";
+import axios from "axios";
 
 const TradeOverview = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [transData, setTransData] = useState();
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('/api/trans');
+      setTransData(response.data);
+      console.log(response.data)
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className="mt-5">
       <h1 className="text-xl text-gray-500 font-medium pb-2">
@@ -12,7 +33,7 @@ const TradeOverview = () => {
         <div className="flex justify-between items-center">
           <div>
             <p className="text-gray-500 text-sm">TOTAL TRADES</p>
-            <span className="text-blue-950 text-5xl">3856</span>
+            <span className="text-blue-950 text-5xl">{transData.id.length}</span>
           </div>
           <div>
             <p className="text-gray-500 text-sm">TOTAL REVENUE TRADES</p>
