@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import profile from '../../images/profile.jpg'
-import {  ChevronDown, LogOut, Settings, User } from "lucide-react";
+import profile from "../../images/profile.jpg";
+import { ChevronDown, LogOut, Settings, User } from "lucide-react";
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const trigger = useRef<any>(null);
@@ -46,13 +46,10 @@ const DropdownUser = () => {
           />
         </span>
         <span className="hidden text-left lg:block mr-5">
-          <span className="block  font-semibold text-black">
-            Jane Doe
-          </span>
+          <span className="block  font-semibold text-black">Jane Doe</span>
           <span className="block text-xs">Admin</span>
         </span>
         <ChevronDown size={20} />
-
       </Link>
 
       {/* <!-- Dropdown Start --> */}
@@ -60,8 +57,9 @@ const DropdownUser = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute right-0 mt-4 flex flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark ${dropdownOpen === true ? "block" : "hidden"
-          }`}
+        className={`absolute z-50 right-0 mt-4 flex flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark ${
+          dropdownOpen === true ? "block" : "hidden"
+        }`}
       >
         <ul className="flex flex-col gap-5 border-b border-stroke px-6 pb-7.5 pt-6  dark:border-strokedark">
           <li>
@@ -69,11 +67,11 @@ const DropdownUser = () => {
               href="/profile"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
-              <User size={20}/>
+              <User size={20} />
               My Profile
             </Link>
           </li>
-       
+
           <li>
             <Link
               href="/settings"
