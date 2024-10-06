@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import SmallCard from "@/components/ui/smallcard";
 import Image from "next/image";
@@ -15,10 +15,9 @@ import { ChevronDown } from "lucide-react";
 import NotificationCard from "@/components/ui/notification-card";
 import { ChartComponent } from "@/components/ui/chart-card";
 import TradeOverview from "@/components/ui/trade-overview";
-import transfer from '../../images/transfer.svg';
-import shape from '../../images/shape1.svg';
+import transfer from "../../images/transfer.svg";
+import shape from "../../images/shape1.svg";
 import axios from "axios";
-
 
 const Dashboard = () => {
   const [customercount, setCustomercount] = useState();
@@ -29,27 +28,28 @@ const Dashboard = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [customersResponse, suppliersResponse, meetingsResponse] = await Promise.all([
-        axios.get('/api/customers'),
-        axios.get('/api/supplier'),
-        axios.get('/api/meeting'),
-      ]);
-  
+      const [customersResponse, suppliersResponse, meetingsResponse] =
+        await Promise.all([
+          axios.get("/api/customers"),
+          axios.get("/api/supplier"),
+          axios.get("/api/meeting"),
+        ]);
+
       setCustomercount(customersResponse.data.count);
       setSuppliercount(suppliersResponse.data.count);
       setMeetingcount(meetingsResponse.data.count);
-      
+
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     fetchData();
   }, []);
-  
+
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -86,16 +86,103 @@ const Dashboard = () => {
                 />
               </span>
               <span className="hidden text-left lg:block mr-5">
-                <span className="block text-sm text-gray-500">Good Morning,</span>
+                <span className="block text-sm text-gray-500">
+                  Good Morning,
+                </span>
                 <h1 className="block text-xl font-semibold text-gray-500">
                   Jane Doe
                 </h1>
               </span>
             </div>
             <div className="flex gap-5 mt-16">
-              <SmallCard />
-              <SmallCard />
-              <SmallCard />
+              <div className="shadow-md flex flex-col justify-between bg-white w-60 h-60 rounded-2xl">
+                <div className="relative">
+                  <Image
+                    className="absolute top-8 left-5"
+                    src={transfer}
+                    alt={"shape"}
+                    width={50}
+                    height={50}
+                  />
+                  <Image
+                    src={shape}
+                    className="rounded-xl"
+                    alt={"shape"}
+                    width={120}
+                    height={120}
+                  />
+                </div>
+                <div className="p-4">
+                  <div className="flex justify-between items-end">
+                    <h1 className="text-blue-950 text-4xl">12</h1>
+                  </div>
+                  <div className="">
+                    <span className="text-gray-500 font-medium text-sm">
+                      NEW REQUIREMENTS
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* INITATED */}
+              <div className="shadow-md flex flex-col justify-between bg-white w-60 h-60 rounded-2xl">
+                <div className="relative">
+                  <Image
+                    className="absolute top-8 left-5"
+                    src={transfer}
+                    alt={"shape"}
+                    width={50}
+                    height={50}
+                  />
+                  <Image
+                    src={shape}
+                    className="rounded-xl"
+                    alt={"shape"}
+                    width={120}
+                    height={120}
+                  />
+                </div>
+                <div className="p-4">
+                  <div className="flex justify-between items-end">
+                    <h1 className="text-blue-950 text-4xl">02</h1>
+                  </div>
+                  <div className="">
+                    <span className="text-gray-500 font-medium text-sm">
+                      INITATED
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* UPCOMING */}
+              <div className="shadow-md flex flex-col justify-between bg-white w-60 h-60 rounded-2xl">
+                <div className="relative">
+                  <Image
+                    className="absolute top-8 left-5"
+                    src={transfer}
+                    alt={"shape"}
+                    width={50}
+                    height={50}
+                  />
+                  <Image
+                    src={shape}
+                    className="rounded-xl"
+                    alt={"shape"}
+                    width={120}
+                    height={120}
+                  />
+                </div>
+                <div className="p-4">
+                  <div className="flex justify-between items-end">
+                    <h1 className="text-blue-950 text-4xl">03</h1>
+                  </div>
+                  <div className="">
+                    <span className="text-gray-500 font-medium text-sm">
+                      UPCOMING
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <NotificationCard />
@@ -125,9 +212,6 @@ const Dashboard = () => {
             <div className="p-4">
               <div className="flex justify-between items-end">
                 <h1 className="text-blue-950 text-4xl">{customercount}</h1>
-                <p className="text-gray-500 text-lg">
-                  $ <span className="font-bold ">3,5678</span>{" "}
-                </p>
               </div>
               <div className="">
                 <span className="text-gray-500 font-medium text-sm">
@@ -158,9 +242,6 @@ const Dashboard = () => {
             <div className="p-4">
               <div className="flex justify-between items-end">
                 <h1 className="text-blue-950 text-4xl">{suppliercount}</h1>
-                <p className="text-gray-500 text-lg">
-                  $ <span className="font-bold ">3,5678</span>{" "}
-                </p>
               </div>
               <div className="">
                 <span className="text-gray-500 font-medium text-sm">
@@ -191,9 +272,6 @@ const Dashboard = () => {
             <div className="p-4">
               <div className="flex justify-between items-end">
                 <h1 className="text-blue-950 text-4xl">{meetingcount}</h1>
-                <p className="text-gray-500 text-lg">
-                  $ <span className="font-bold ">3,5678</span>{" "}
-                </p>
               </div>
               <div className="">
                 <span className="text-gray-500 font-medium text-sm">

@@ -3,25 +3,49 @@ import SmallCard from "./smallcard";
 import { MoveUp } from "lucide-react";
 import axios from "axios";
 
-const TradeOverview = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [transData, setTransData] = useState();
+interface ProcessStage {
+  stageName: string;
+  status: string;
+  cost: string;
+}
 
-  const fetchData = async () => {
-    setLoading(true);
+interface Trade {
+  id: string;
+  tradeStage: string;
+  processStage: ProcessStage[];
+}
+
+const TradeOverview = () => {
+  const [trades, setTrades] = useState<Trade[]>([]);
+  const [totalTrades, setTotalTrades] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
+  const stages = [
+    "Contract stage",
+    "Pre Shipment",
+    "Post Fixtures Vessel",
+    "In-Transit",
+    "Pre Closure",
+  ];
+
+  const fetchTrades = async () => {
     try {
-      const response = await axios.get('/api/trans');
-      setTransData(response.data);
-      console.log(response.data)
+      const response = await axios.get<Trade[]>("/api/trans");
+      const tradesData = response.data;
+
+      const tradesCount = tradesData.length;
+
+      setTrades(response.data);
+
+      setTotalTrades(tradesCount);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching trades:", error);
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchData();
+    fetchTrades();
   }, []);
 
   return (
@@ -33,12 +57,12 @@ const TradeOverview = () => {
         <div className="flex justify-between items-center">
           <div>
             <p className="text-gray-500 text-sm">TOTAL TRADES</p>
-            <span className="text-blue-950 text-5xl">{transData.id.length}</span>
+            <span className="text-blue-950 text-5xl">{totalTrades}</span>
           </div>
           <div>
             <p className="text-gray-500 text-sm">TOTAL REVENUE TRADES</p>
             <div className="text-blue-950 text-5xl flex items-center gap-2">
-              3856
+              3945.07
               <span className="text-white bg-[#3aa345] rounded-sm text-sm px-2 flex w-full h-10 items-center gap-1">
                 10.3% <MoveUp size={10} color="#fff" />
               </span>
@@ -46,10 +70,26 @@ const TradeOverview = () => {
           </div>
         </div>
         <div className="flex gap-10 mt-12">
-          <SmallCard />
-          <SmallCard />
-          <SmallCard />
-          <SmallCard />
+          {stages.map((stage) => {
+            const filteredTrades = trades.filter(
+              (trade) => trade.tradeStage === stage
+            );
+            const estimatedCost = filteredTrades.reduce((acc, trade) => {
+              const cost = trade.processStage.find(
+                (ps) => ps.stageName === "Estimated cost sheet"
+              );
+              return acc + (cost ? parseFloat(cost.cost) : 0);
+            }, 0);
+
+            return (
+              <SmallCard
+                key={stage}
+                stage={stage}
+                tradeCount={filteredTrades.length}
+                totalRevenue={estimatedCost}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

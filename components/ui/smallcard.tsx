@@ -5,14 +5,24 @@ import Image from "next/image";
 import shape from "../../images/shape1.svg";
 import transfer from "../../images/transfer.svg";
 
-const SmallCard = () => {
+interface SmallCardProps {
+  stage: string;
+  tradeCount: number;
+  totalRevenue: number;
+}
+
+const SmallCard: React.FC<SmallCardProps> = ({
+  stage,
+  tradeCount,
+  totalRevenue,
+}) => {
   return (
     <div className="shadow-md flex flex-col justify-between bg-white w-60 h-60 rounded-2xl">
       <div className="relative">
         <Image
           className="absolute top-8 left-5"
           src={transfer}
-          alt={"shape"}
+          alt={"transfer"}
           width={50}
           height={50}
         />
@@ -26,14 +36,14 @@ const SmallCard = () => {
       </div>
       <div className="p-4">
         <div className="flex justify-between items-end">
-          <h1 className="text-blue-950 text-4xl">12</h1>
+          <h1 className="text-blue-950 text-4xl">{tradeCount}</h1>
           <p className="text-gray-500 text-lg">
-            $ <span className="font-bold ">3,5678</span>{" "}
+            $ <span className="font-bold ">{totalRevenue}</span>
           </p>
         </div>
         <div className="">
-          <span className="text-gray-500 font-medium text-sm">
-            CONTRACT STAGE
+          <span className="text-gray-500 font-medium text-sm uppercase  ">
+            {stage}
           </span>
         </div>
       </div>
