@@ -43,6 +43,8 @@ const Dashboard = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
       setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,7 +71,7 @@ const Dashboard = () => {
         </DropdownMenu>
       </div>
       <div className="flex flex-wrap gap-4 mt-10">
-        <div className="flex-none w-full xl:w-7/12">
+        <div className="flex-none w-full xl:w-7/12 flex-shrink">
           <div className="shadow-md bg-white rounded-3xl p-10 bg-gradient-to-t from-[#e2fef9] via-[#f2fffc] to-[#fff]">
             <div className="flex gap-5">
               <span className="h-12 w-12 rounded-full">
@@ -192,6 +194,7 @@ const Dashboard = () => {
         </div>
         <div className="space-y-4">
           {/* customer */}
+
           <div className="shadow-md flex flex-col justify-between bg-white w-60 h-60 rounded-2xl">
             <div className="relative">
               <Image

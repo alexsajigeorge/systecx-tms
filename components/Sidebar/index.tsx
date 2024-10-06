@@ -3,7 +3,7 @@
 import { Fragment, useEffect, useState } from "react";
 
 import Link from "next/link";
-import logo from "../../images/logo.png"
+import logo from "../../images/logo.png";
 import Image from "next/image";
 
 import {
@@ -15,29 +15,19 @@ import {
 import { NavItems } from "./NavItems";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import React from "react";
 
 export default function SideNav() {
   const navItems = NavItems();
 
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = window.localStorage.getItem("sidebarExpanded");
-      if (saved === null) {
-        return true;
-      }
-      return JSON.parse(saved);
-    }
-    return true;
-  });
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false); // Default to true
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(
-        "sidebarExpanded",
-        JSON.stringify(isSidebarExpanded)
-      );
+    const saved = window.localStorage.getItem("sidebarExpanded");
+    if (saved !== null) {
+      setIsSidebarExpanded(JSON.parse(saved));
     }
-  }, [isSidebarExpanded]);
+  }, []);
 
   const toggleSidebar = () => {
     setIsSidebarExpanded(!isSidebarExpanded);

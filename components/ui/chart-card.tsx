@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Dot, DotIcon, MoveUp, TrendingUp } from "lucide-react";
+import { useState } from "react";
+import { ArrowDown, ArrowUp, Dot, TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -20,90 +21,222 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-export const description = "A donut chart with text";
-
 const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 190, fill: "var(--color-other)" },
+  { browser: "COAL", visitors: 275, fill: "var(--color-coal)" },
+  { browser: "ZINC", visitors: 400, fill: "var(--color-zinc)" },
+  { browser: "others", visitors: 190, fill: "var(--color-others)" },
 ];
 
 const chartConfig = {
   visitors: {
     label: "Visitors",
   },
-  chrome: {
-    label: "Chrome",
+  coal: {
+    label: "coal",
     color: "hsl(var(--chart-1))",
   },
-  safari: {
-    label: "Safari",
+  zinc: {
+    label: "zinc",
     color: "hsl(var(--chart-2))",
   },
-  firefox: {
-    label: "Firefox",
-    color: "hsl(var(--chart-3))",
-  },
-  edge: {
-    label: "Edge",
-    color: "hsl(var(--chart-4))",
-  },
-  other: {
-    label: "Other",
+  others: {
+    label: "Others",
     color: "hsl(var(--chart-5))",
   },
 } satisfies ChartConfig;
+
+const TabContent = () => {
+  return (
+    <div className="text-white">
+      <div className="flex items-center gap-3">
+        <span className="text-green-500 text-3xl">&#9679;</span>
+        <p>Coal</p>
+      </div>
+      <div className="flex bg-gren gap-4 items-center">
+        <p className="text-lg">$2,303.72</p>
+        <span className="inline-flex bg-green-500 p-1 rounded gap-2 text-xs">
+          10.3% <ArrowUp size={14} />
+        </span>
+      </div>
+
+      <div className="flex items-center gap-3 mt-4">
+        <span className="text-green-500 text-3xl">&#9679;</span>
+        <p>Aluminum</p>
+      </div>
+      <div className="flex bg-gren gap-4 items-center">
+        <p className="text-lg">$1,242.82</p>
+        <span className="inline-flex bg-red-500 p-1 rounded gap-2 text-xs">
+          11.5% <ArrowDown size={14} />
+        </span>
+      </div>
+
+      <div className="flex items-center gap-3 mt-4">
+        <span className="text--500 text-3xl">&#9679;</span>
+        <p>Iron Ore</p>
+      </div>
+      <div className="flex bg-gren gap-4 items-center mb-5">
+        <p className="text-lg">$398.53</p>
+        <span className="inline-flex bg-red-500 p-1 rounded gap-2 text-xs">
+          8.9% <ArrowDown size={14} />
+        </span>
+      </div>
+    </div>
+  );
+};
 
 export function ChartComponent() {
   const totalVisitors = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
   }, []);
 
-  return (
-    <Card className="flex h-full flex-col bg-gradient-to-t from-[#572ad8] via-[#3260dc] to-[#01a8e1]">
-      <CardHeader className="items-center pb-0">
-        <CardTitle className="text-white">DIVISION</CardTitle>
-        <CardDescription>
-          <Tabs defaultValue="metals" className="mt-5">
-            <TabsList className="flex justify-center">
-              <TabsTrigger value="metals">Metals</TabsTrigger>
-              <TabsTrigger value="minerals">Minerals</TabsTrigger>
-            </TabsList>
-            <TabsContent value="account"></TabsContent>
-            <TabsContent value="minerals"></TabsContent>
-          </Tabs>
-        </CardDescription>
-      </CardHeader>
+  const [activeTab, setActiveTab] = useState("tab1");
+  const tabs = [
+    { id: "tab1", label: "Amount", content: <TabContent /> },
+    { id: "tab2", label: "Volume", content: <TabContent /> },
+  ];
 
-      <CardFooter className="flex-col gap-2 text-sm">
-        <Tabs defaultValue="amount" className="w-full">
+  return (
+    <Card className="flex flex-col bg-gradient-to-t from-[#572ad8] via-[#3260dc] to-[#01a8e1]">
+      <CardHeader className="items-center pb-0">
+        <CardTitle className="text-white mb-2">DIVISIONS</CardTitle>
+        <Tabs defaultValue="Metals" className="w-full text-center">
           <TabsList>
-            <TabsTrigger value="amount">Amount</TabsTrigger>
-            <TabsTrigger value="volume">Volume</TabsTrigger>
+            <TabsTrigger value="Metals">Metals</TabsTrigger>
+            <TabsTrigger value="Minerals">Minerals</TabsTrigger>
           </TabsList>
-          <TabsContent value="amount">
-            <ul>
-              <li className="flex items-start">
-                <Dot size={50} color="#fff" />
-                <span className="text-white">
-                  <p className="text-md">Coal</p>
-                  <p className="text-lg">
-                    $ 12,000
-                    <span className="text-white bg-[#3aa345] ml-2 rounded-sm px-1 text-xs inline-flex items-center gap-1">
-                      10.3% <MoveUp size={10} color="#fff" />
-                    </span>
-                  </p>
-                </span>
-              </li>
-              <Dot size={50} color="#fff" />
-              <Dot size={50} color="#fff" />
-            </ul>
+          <TabsContent value="Metals">
+            <CardContent className="flex-1 pb-0">
+              <ChartContainer
+                config={chartConfig}
+                className="mx-auto aspect-square max-h-[250px]"
+              >
+                <PieChart>
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent hideLabel />}
+                  />
+                  <Pie
+                    data={chartData}
+                    dataKey="visitors"
+                    nameKey="browser"
+                    innerRadius={60}
+                    strokeWidth={5}
+                  >
+                    <Label
+                      content={({ viewBox }) => {
+                        if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                          return (
+                            <text
+                              x={viewBox.cx}
+                              y={viewBox.cy}
+                              textAnchor="middle"
+                              dominantBaseline="middle"
+                            >
+                              <tspan
+                                x={viewBox.cx}
+                                y={viewBox.cy}
+                                className="fill-white text-3xl font-bold"
+                              >
+                                $ {totalVisitors.toLocaleString()}
+                              </tspan>
+                              <tspan
+                                x={viewBox.cx}
+                                y={(viewBox.cy || 0) + 24}
+                                className="fill-white"
+                              >
+                                COAL
+                              </tspan>
+                            </text>
+                          );
+                        }
+                      }}
+                    />
+                  </Pie>
+                </PieChart>
+              </ChartContainer>
+            </CardContent>
           </TabsContent>
-          <TabsContent value="volume">Change your password here.</TabsContent>
+          <TabsContent value="Minerals">
+            <CardContent className="flex-1 pb-0">
+              <ChartContainer
+                config={chartConfig}
+                className="mx-auto aspect-square max-h-[250px]"
+              >
+                <PieChart>
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent hideLabel />}
+                  />
+                  <Pie
+                    data={chartData}
+                    dataKey="visitors"
+                    nameKey="browser"
+                    innerRadius={60}
+                    strokeWidth={5}
+                  >
+                    <Label
+                      content={({ viewBox }) => {
+                        if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                          return (
+                            <text
+                              x={viewBox.cx}
+                              y={viewBox.cy}
+                              textAnchor="middle"
+                              dominantBaseline="middle"
+                            >
+                              <tspan
+                                x={viewBox.cx}
+                                y={viewBox.cy}
+                                className="fill-white text-3xl font-bold"
+                              >
+                                $ {totalVisitors.toLocaleString()}
+                              </tspan>
+                              <tspan
+                                x={viewBox.cx}
+                                y={(viewBox.cy || 0) + 24}
+                                className="fill-white"
+                              >
+                                ZINC
+                              </tspan>
+                            </text>
+                          );
+                        }
+                      }}
+                    />
+                  </Pie>
+                </PieChart>
+              </ChartContainer>
+            </CardContent>
+          </TabsContent>
         </Tabs>
-      </CardFooter>
+        <div className="w-full max-w-lg">
+          <div className="flex gap-5 border-b">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                className={`py-2 font-medium text-white focus:outline-none ${
+                  activeTab === tab.id
+                    ? "border-b-2 border-white text-white font-bold"
+                    : " hover:text-white"
+                }`}
+                onClick={() => setActiveTab(tab.id)}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+          <div className="py-4">
+            {tabs.map(
+              (tab) =>
+                activeTab === tab.id && (
+                  <div key={tab.id} className="">
+                    {tab.content}
+                  </div>
+                )
+            )}
+          </div>
+        </div>
+      </CardHeader>
     </Card>
   );
 }
